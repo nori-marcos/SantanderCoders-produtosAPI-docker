@@ -1,0 +1,24 @@
+  version: '3.9'
+
+  services:
+    app:
+      image: coders/spring-boot-docker-app
+      networks:
+           - nova-rede
+      ports:
+        - 8080:8080
+      depends_on:
+        - docker-postgres
+    docker-postgres:
+      image: postgres:10.4
+      networks:
+           - nova-rede
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+        - POSTGRES_USERNAME=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=db
+
+  networks:
+    nova-rede:
+      driver: bridge
